@@ -482,10 +482,11 @@ func (l *DecisionLogger) AnalyzePerformance(lookbackCycles int) (*PerformanceAna
 	if analysis.TotalTrades > 0 {
 		analysis.WinRate = (float64(analysis.WinningTrades) / float64(analysis.TotalTrades)) * 100
 
-		// 计算总盈利和总亏损
+		// 计算总盈利和总亏损（用于备用）
 		totalWinAmount := analysis.AvgWin   // 当前是累加的总和
 		totalLossAmount := analysis.AvgLoss // 当前是累加的总和（负数）
 
+		// 计算平均盈利和平均亏损
 		if analysis.WinningTrades > 0 {
 			analysis.AvgWin /= float64(analysis.WinningTrades)
 		}
@@ -493,13 +494,19 @@ func (l *DecisionLogger) AnalyzePerformance(lookbackCycles int) (*PerformanceAna
 			analysis.AvgLoss /= float64(analysis.LosingTrades)
 		}
 
-		// Profit Factor = 总盈利 / 总亏损（绝对值）
-		// 注意：totalLossAmount 是负数，所以取负号得到绝对值
-		if totalLossAmount != 0 {
-			analysis.ProfitFactor = totalWinAmount / (-totalLossAmount)
-		} else if totalWinAmount > 0 {
+		// Profit Factor = 平均盈利 / 平均亏损（绝对值）
+		// 注意：analysis.AvgLoss 是负数（平均亏损），所以取负号得到绝对值
+		// 这样与前端显示的"平均盈利 ÷ 平均亏损"一致
+		if analysis.LosingTrades > 0 && analysis.AvgLoss != 0 {
+			// 有亏损交易时，使用平均盈利 ÷ 平均亏损（绝对值）
+			analysis.ProfitFactor = analysis.AvgWin / (-analysis.AvgLoss)
+		} else if analysis.WinningTrades > 0 {
 			// 只有盈利没有亏损的情况，设置为一个很大的值表示完美策略
-			analysis.ProfitFactor = 999.0
+			// 但限制上限为100，避免显示999这样的异常值
+			analysis.ProfitFactor = 100.0
+		} else {
+			// 没有交易或只有亏损没有盈利的情况
+			analysis.ProfitFactor = 0.0
 		}
 	}
 
