@@ -285,9 +285,96 @@ docker compose up -d --build
 
 ---
 
-### 📦 方式B：手动安装（开发者）
+### ⚡ 方式B：一键脚本部署（Windows/Linux - 推荐！）
 
-**注意**：如果你使用了上面的Docker部署，请跳过本节。手动安装仅在你需要修改代码或不想使用Docker时需要。
+**🚀 使用一键脚本快速编译和启动 - 自动化完成所有步骤！**
+
+项目提供了 Windows 和 Linux 的一键部署脚本，自动处理编译、依赖安装和启动流程。
+
+#### Windows 系统
+
+**步骤1：准备配置文件**
+```bash
+# 复制配置文件模板
+copy config.json.example config.json
+
+# 编辑并填入你的API密钥（使用记事本或其他编辑器）
+notepad config.json
+```
+
+**步骤2：一键编译**
+```bash
+# 运行编译脚本（自动编译后端和前端）
+build.bat
+```
+
+**步骤3：一键启动**
+```bash
+# 运行启动脚本（自动启动后端和前端服务）
+start.bat
+```
+
+**启动完成后：**
+- 前端界面：**http://localhost:3000**
+- API接口：**http://localhost:8080**
+- 日志文件：`backend.log` 和 `frontend.log`
+
+**停止服务：**
+- 在启动脚本窗口中按任意键即可停止所有服务
+
+---
+
+#### Linux/Ubuntu 系统
+
+**步骤1：准备配置文件**
+```bash
+# 复制配置文件模板
+cp config.json.example config.json
+
+# 编辑并填入你的API密钥
+nano config.json  # 或使用其他编辑器
+```
+
+**步骤2：一键编译**
+```bash
+# 赋予执行权限
+chmod +x build.sh
+
+# 运行编译脚本（自动编译后端和前端）
+./build.sh
+```
+
+**步骤3：一键启动**
+```bash
+# 赋予执行权限
+chmod +x start.sh
+
+# 运行启动脚本（自动启动后端和前端服务）
+./start.sh
+```
+
+**启动完成后：**
+- 前端界面：**http://localhost:3000**
+- API接口：**http://localhost:8080**
+- 日志文件：`backend.log` 和 `frontend.log`
+
+**停止服务：**
+- 按 `Ctrl+C` 即可停止所有服务
+
+**脚本功能说明：**
+- ✅ 自动检查环境（Go、Node.js、npm）
+- ✅ 自动安装依赖（Go modules、npm packages）
+- ✅ 自动编译后端（生成可执行文件）
+- ✅ 自动编译前端（生成静态文件）
+- ✅ 自动启动服务（后端 + 前端）
+- ✅ 自动检查服务状态
+- ✅ 支持优雅停止服务
+
+---
+
+### 📦 方式C：手动安装（开发者）
+
+**注意**：如果你使用了上面的 Docker 或一键脚本部署，请跳过本节。手动安装仅在你需要修改代码或进行深度定制时需要。
 
 ### 1. 环境要求
 

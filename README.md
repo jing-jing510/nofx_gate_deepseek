@@ -326,9 +326,96 @@ Open your browser and visit: **http://localhost:3000**
 
 ---
 
-### 📦 Option B: Manual Installation (For Developers)
+### ⚡ Option B: One-Click Script Deployment (Windows/Linux - Recommended!)
 
-**Note**: If you used Docker deployment above, skip this section. Manual installation is only needed if you want to modify the code or run without Docker.
+**🚀 Use one-click scripts to quickly build and start - Automate all steps!**
+
+The project provides one-click deployment scripts for Windows and Linux that automatically handle compilation, dependency installation, and startup processes.
+
+#### Windows System
+
+**Step 1: Prepare Configuration File**
+```bash
+# Copy configuration template
+copy config.json.example config.json
+
+# Edit and fill in your API keys (using Notepad or any editor)
+notepad config.json
+```
+
+**Step 2: One-Click Build**
+```bash
+# Run build script (automatically builds backend and frontend)
+build.bat
+```
+
+**Step 3: One-Click Start**
+```bash
+# Run start script (automatically starts backend and frontend services)
+start.bat
+```
+
+**After startup:**
+- Frontend interface: **http://localhost:3000**
+- API interface: **http://localhost:8080**
+- Log files: `backend.log` and `frontend.log`
+
+**Stop services:**
+- Press any key in the start script window to stop all services
+
+---
+
+#### Linux/Ubuntu System
+
+**Step 1: Prepare Configuration File**
+```bash
+# Copy configuration template
+cp config.json.example config.json
+
+# Edit and fill in your API keys
+nano config.json  # or use any editor
+```
+
+**Step 2: One-Click Build**
+```bash
+# Grant execute permission
+chmod +x build.sh
+
+# Run build script (automatically builds backend and frontend)
+./build.sh
+```
+
+**Step 3: One-Click Start**
+```bash
+# Grant execute permission
+chmod +x start.sh
+
+# Run start script (automatically starts backend and frontend services)
+./start.sh
+```
+
+**After startup:**
+- Frontend interface: **http://localhost:3000**
+- API interface: **http://localhost:8080**
+- Log files: `backend.log` and `frontend.log`
+
+**Stop services:**
+- Press `Ctrl+C` to stop all services
+
+**Script Features:**
+- ✅ Automatic environment check (Go, Node.js, npm)
+- ✅ Automatic dependency installation (Go modules, npm packages)
+- ✅ Automatic backend compilation (generates executable)
+- ✅ Automatic frontend compilation (generates static files)
+- ✅ Automatic service startup (backend + frontend)
+- ✅ Automatic service status check
+- ✅ Support graceful service shutdown
+
+---
+
+### 📦 Option C: Manual Installation (For Developers)
+
+**Note**: If you used Docker or one-click script deployment above, skip this section. Manual installation is only needed if you want to modify the code or do deep customization.
 
 ### 1. Environment Requirements
 
