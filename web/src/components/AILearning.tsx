@@ -353,10 +353,11 @@ export default function AILearning({ traderId }: AILearningProps) {
               border: '1px solid rgba(240, 185, 11, 0.3)'
             }}>
               <div className="text-sm leading-relaxed" style={{ color: '#FEF3C7' }}>
-                {(performance.profit_factor || 0) >= 2.0 && '🔥 盈利能力出色！每亏1元能赚' + (performance.profit_factor || 0).toFixed(1) + '元，AI策略表现优异。'}
+                {(performance.profit_factor || 0) >= 100.0 && '🔥 完美策略！至今无亏损交易，所有交易均盈利，AI策略表现优异。'}
+                {(performance.profit_factor || 0) >= 2.0 && (performance.profit_factor || 0) < 100.0 && '🔥 盈利能力出色！每亏1元能赚' + (performance.profit_factor || 0).toFixed(1) + '元，AI策略表现优异。'}
                 {(performance.profit_factor || 0) >= 1.5 && (performance.profit_factor || 0) < 2.0 && '✓ 策略稳定盈利，盈亏比健康，继续保持纪律性交易。'}
                 {(performance.profit_factor || 0) >= 1.0 && (performance.profit_factor || 0) < 1.5 && '⚠️ 策略略有盈利但需优化，AI正在调整仓位和止损策略。'}
-                {(performance.profit_factor || 0) > 0 && (performance.profit_factor || 0) < 1.0 && '❌ 平均亏损大于盈利，需要调整策略或降低交易频率。'}
+                {(performance.profit_factor || 0) > 0 && (performance.profit_factor || 0) < 1.0 && '❌ 总亏损大于总盈利，需要调整策略或降低交易频率。'}
               </div>
             </div>
           </div>
