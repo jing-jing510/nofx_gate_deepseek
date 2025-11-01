@@ -33,10 +33,19 @@ echo "   NOFX AI Trading System - Ubuntu/Linux 启动脚本"
 echo "═══════════════════════════════════════════════════════════════"
 echo
 
-# 检查后端可执行文件
-if [ ! -f "nofx" ]; then
-    print_error "未找到 nofx"
-    echo "请先运行 ./build.sh 编译项目"
+# 检查后端可执行文件（支持 nofx-linux 和 nofx）
+BINARY_NAME=""
+if [ -f "nofx-linux" ]; then
+    BINARY_NAME="nofx-linux"
+    # 如果存在 nofx-linux，确保它有执行权限
+    chmod +x nofx-linux
+    print_info "检测到 nofx-linux（Windows 交叉编译版本）"
+elif [ -f "nofx" ]; then
+    BINARY_NAME="nofx"
+    chmod +x nofx
+else
+    print_error "未找到 nofx 或 nofx-linux"
+    echo "请先运行 ./build.sh 编译项目，或上传编译好的 nofx-linux 文件"
     exit 1
 fi
 
@@ -91,7 +100,7 @@ trap cleanup SIGINT SIGTERM
 
 # 启动后端
 print_info "[1/2] 启动后端服务..."
-./nofx config.json > backend.log 2>&1 &
+./$BINARY_NAME config.json > backend.log 2>&1 &
 BACKEND_PID=$!
 
 # 等待后端启动
